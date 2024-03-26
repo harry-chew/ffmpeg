@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+</head>
+<body>
+    <h2>Upload Images</h2>
+    <form action="http://localhost:3000/upload" method="post" enctype="multipart/form-data">
+        <label for="images">Images:</label><br>
+        <input type="file" name="images" accept="image/*" multiple><br>
+        <label for="voice">Voice:</label><br>
+        <input type="file" name="voice" accept="audio/*"><br>
+        <label for="music">Music:</label><br>
+        <input type="file" name="music" accept="audio/*"><br>
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>
