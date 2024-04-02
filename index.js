@@ -48,6 +48,8 @@ app.post('/upload', async (req, res) => {
         { 
             fs.unlinkSync(videoFile);
         }
+
+        
         //loop through imagepath array and create video.txt file based on results
         imagePaths.forEach((imagePath) => {
             //file -> the file to add to the video
@@ -79,10 +81,11 @@ app.post('/upload', async (req, res) => {
             '-i', audioFile,
             '-i', voiceFile,
             '-map', '0:v:0', '-map', '1:a:0', '-map', '2:a:0', 
-            '-filter_complex', "[1:a]volume=volume=-24dB[a0];[2:a]volume=volume=0dB[a1]; [a0][a1]amerge=inputs=2",
+            '-filter_complex', "[1:a]volume=volume=-24dB[a0];[2:a]volume=volume=0dB[a1]; [a0][a1]amerge=inputs=2; zoompan=z='min(zoom+0.0015,1.5)':d=700:x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'",
             //'-af', 'volume=-24dB',
             '-shortest',
             '-vf', 'pad=ceil(iw/2)*2:ceil(ih/2)*2',
+            '-pix_fmt', 'yuvj422p',
             '-vcodec', 'mpeg4',
             '-y', moviePath
         ], {
