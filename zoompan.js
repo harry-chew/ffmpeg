@@ -21,7 +21,8 @@ const ffmpegProcess = spawn('ffmpeg', [
     '-f', 'concat',
     '-i', 'video.txt',
     '-shortest',
-    '-pix_fmt', 'yuvj420p',
+    '-qscale', '0',
+    '-pix_fmt', 'yuv420p',
     '-vcodec', 'mpeg4',
     '-y', moviePath
 ], {
