@@ -1,0 +1,19 @@
+* {
+    margin : 0;
+    padding : 0;
+    border : 0;
+}
+
+input, textarea, label {
+    padding : 0.5rem;
+    margin : 0.5rem;
+}
+
+input[type="submit"] {
+    width : 200px;
+    border : 1px solid black;
+}
+
+#text {
+    border : 1px solid black;
+}

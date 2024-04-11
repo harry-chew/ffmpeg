@@ -4,8 +4,8 @@ const fileUpload = require('express-fileupload');
 const { spawn } = require('child_process');
 const fs = require('fs');
 const sharp = require('sharp');
-const errorHandler = require('./src/errorHandler');
-const readImage = require('./src/readImage');
+const errorHandler = require('./src/js/errorHandler');
+const readImage = require('./src/js/readImage');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
