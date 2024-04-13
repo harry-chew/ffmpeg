@@ -7,14 +7,17 @@ const fileUpload = require('express-fileupload');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files from the 'public' directory
+//app uses
 app.use(express.static('public'));
 app.use(fileUpload());
-app.set('view engine', 'ejs');
 app.use(express.json());
+
+//app settings
+app.set('view engine', 'ejs');
+
 //routers
-const defaultRouter = require('./src/routes/defaultRouter');
-const appRouter = require('./src/routes/appRouter');
+const defaultRouter = require('./routes/defaultRouter');
+const appRouter = require('./routes/appRouter');
 
 //routes
 app.use('/', defaultRouter);

@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
     <title>Upload Files</title>
 </head>
 <body>
-    <label for="output-filename">Output Filename:</label>
-    <input id="output-filename" type="text">
+    <h2>uploaded</h2>
+    <a href="/">Home</a>
+    <% locals.text.forEach((sentence, index) => { %>
+        <div class="upload-item"><p><%= index + 1 %>: <%= sentence %></p></div>
+    <% }); %>
+    <% console.log(locals.text) %>
 </body>
 </html>
