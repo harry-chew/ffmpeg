@@ -13,5 +13,9 @@ getSentences = (req, res) => {
     return returnSentences;
 };
 
+cleanInput = (req, res) => {
+    req = req.replace(/\r\n/g, '');
+    return req;
+};
 
-module.exports = { getSentences }
+module.exports = { getSentences, cleanInput }

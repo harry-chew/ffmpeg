@@ -28,11 +28,9 @@ const output = await sharp(image, { animated: false })
   return output;
 }
 
-
-
 async function convertToJpeg(image, file) {
     try {
-        const convert = await sharp(image).toFile(`image_${file}.jpg`);
+        const convert = await sharp(image).toFile(`./temp/image_${file}.jpg`);
         return convert;
     } catch (error) {
         return error;
@@ -46,9 +44,9 @@ function convertAllImages(images, imagePaths) {
             convertToJpeg(image.data, index);
         }
         else {
-            sharp(image.data).toFile(`image_${index}.jpg`);
+            sharp(image.data).toFile(`./temp/image_${index}.jpg`);
         }
-        imagePaths.push(`image_${index}.jpg`);
+        imagePaths.push(`./temp/image_${index}.jpg`);
     });
 }
 
