@@ -10,3 +10,6 @@
 
 #REMOVE THIS IN PROD
 /*.log
+
+public/img/*
+temp/*
