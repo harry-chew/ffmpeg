@@ -2,7 +2,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 const fs = require('fs');
 
-const outputFilePath = path.join(__dirname, 'output.mp4');
+const outputFilePath = path.join(__dirname, '../../public/output.mp4');
 
 const options = {
     //report: '-report',
@@ -13,8 +13,8 @@ const options = {
 };
 
 let inputs = [
-    '../temp/ot1.jpg',
-    '../temp/ot2.jpg'
+    path.join(__dirname,'../../public/img/image_0.jpg'),
+    path.join(__dirname,'../../public/img/image_1.jpg')
 ];
 
 let args = [
@@ -90,11 +90,6 @@ function addInput(inputFilePath, shouldLoop = true, loopTime = 4) {
         return true;
     }
 }
-
-
-
-
-
 
 function isExtension(ext, value) {
     if (path.extname(value) == ext)

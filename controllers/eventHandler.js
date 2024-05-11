@@ -25,5 +25,14 @@ module.exports = events.on('images', (images) => {
         //add new filepath to config
         config.set('images', imagePaths);
     }
-    console.log(config);
+});
+
+module.exports = events.on('overlay', (sentences) => {
+    if (!sentences)
+        return;
+
+    if (Array.isArray(sentences))
+    {
+        console.log(sentences);
+    }
 });

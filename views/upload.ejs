@@ -9,8 +9,10 @@
 <body>
     <h2>uploaded</h2>
     <a href="/">Home</a>
-    <% locals.text.forEach((sentence, index) => { %>
-        <div class="upload-item"><p><%= index + 1 %>: <%= sentence %></p></div>
+    <% text.forEach((sentence, index) => { %>
+        <div class="upload-item"><img src="<%= images[index] %>" alt=""><p>&nbsp;&nbsp;<%= index + 1 %>: <%= sentence %></p></div>
     <% }); %>
+
+    <a href="/app/create">Create Video</a>
 </body>
 </html>
