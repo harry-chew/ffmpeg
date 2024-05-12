@@ -19,13 +19,13 @@ function isJpeg(input) {
 }
 
 async function addOverlay(image) {
-const output = await sharp(image, { animated: false })
-  .composite([
-    { input: './img/overlay.png', tile: true, blend: 'saturate' }
-  ])
-  .toBuffer();
+    const output = await sharp(image, { animated: false })
+    .composite([
+        { input: './img/overlay.png', tile: true, blend: 'saturate' }
+    ])
+    .toBuffer();
 
-  return output;
+    return output;
 }
 
 async function convertToJpeg(image, file) {

@@ -8,7 +8,7 @@ const svg = `<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
              </svg>`;
 
 
-function addTextToOverlay(text) {
+function addTextToSVG(text) {
   let svg = `<svg width="1920" height="1080" xmlns="http://www.w3.org/2000/svg">
       <text x="50" y="1030" font-family="Verdana" font-size="35" fill="black">
         ${text}
@@ -17,11 +17,47 @@ function addTextToOverlay(text) {
 
   return svg;
 }
+const pathToFile = path.join(__dirname, '../../img/overlay.png');
 
-const pathToFile = path.join(__dirname, 'overlay.png');
+function createOverlay(imagePath, text) {
+  let splitPath = imagePath.split('\\');
+  let last = splitPath[splitPath.length-1];
+  let droppedArray = splitPath.slice(0, splitPath.length-2);
+  droppedArray.push('overlays');
+  let newPath = droppedArray.join('/');
+  let overlay = `overlay-${last}`;
+  let realPath = path.join(newPath, overlay);
 
-function addOverlay(i, text) {
-  const output = sharp(`./img/${i}.jpg`, { animated: false })
+  let svg = addTextToSVG(text);
+
+  const output = sharp(imagePath, { animated: false })
+  .resize(
+    { 
+      width: 1920,
+      fit: sharp.fit.cover,
+      position: sharp.strategy.entropy,
+    })
+  .composite([
+    { 
+        input: pathToFile,
+        blend: 'over',
+        top : 0,
+        left : 0
+      }
+  ])
+  .toFile(realPath, (err, info) => {
+    if (err) {
+      console.error(err);
+    } else {
+      console.log(info);
+      //addText(inputFilePath, text);
+    }
+  });
+}
+
+function addOverlay(inputFilePath, text) {
+  console.log(inputFilePath, text);
+  const output = sharp(`${inputFilePath}`, { animated: false })
     .resize(
       { 
         width: 1920,
@@ -36,21 +72,22 @@ function addOverlay(i, text) {
           left : 0
         }
     ])
-    .toFile(`o${i}.jpg`, (err, info) => {
+    .toFile(`overlay-${inputFilePath}`, (err, info) => {
       if (err) {
         console.error(err);
       } else {
         console.log(info);
-        addText(i, text);
+        //addText(inputFilePath, text);
       }
     });
 }
+
 function addText(i, text) {
-  const output = sharp(`o${i}.jpg`, { animated: false })
+  const output = sharp(`overlay-${i}`, { animated: false })
     .extract({ left: 0, top: 0, width: 1920, height: 1080 })
     .composite([
       { 
-          input: Buffer.from(addTextToOverlay(text)),
+          input: Buffer.from(addTextToSVG(text)),
           blend: 'over',
           position: sharp.strategy.attention,
           top: 0,
@@ -83,7 +120,7 @@ function resizeImage(image) {
   });
 }
 
-module.exports = { addOverlay, resizeImage }
+module.exports = { addOverlay, resizeImage, addTextToSVG, createOverlay }
 // for(let i = 0; i < 5; i++) {
 //     addOverlayTwo(i);
 // }

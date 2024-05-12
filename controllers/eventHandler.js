@@ -1,6 +1,8 @@
+const { addOverlay, createOverlay } = require('../src/js/overlay');
 const { convertAllImages } = require('../src/js/readImage');
 const Settings = require('./configController');
 const config = new Settings();
+const path = require('path');
 
 const GlobalEvents = require('./eventController');
 const events = new GlobalEvents();
@@ -31,8 +33,10 @@ module.exports = events.on('overlay', (sentences) => {
     if (!sentences)
         return;
 
+    const overlayPath = path.join(__dirname, '../img/overlay.png');
     if (Array.isArray(sentences))
     {
-        console.log(sentences);
+        let imagePath = path.join(__dirname, `../public/${config.settings.images[0]}`);
+        createOverlay(imagePath, "text");
     }
 });
