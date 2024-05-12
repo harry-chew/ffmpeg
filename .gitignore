@@ -12,4 +12,5 @@
 /*.log
 
 public/img/*
+public/overlays/*
 temp/*
