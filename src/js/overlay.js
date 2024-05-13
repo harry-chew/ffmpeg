@@ -19,40 +19,31 @@ function addTextToSVG(text) {
 }
 const pathToFile = path.join(__dirname, '../../img/overlay.png');
 
-function createOverlay(imagePath, text) {
-  let splitPath = imagePath.split('\\');
-  let last = splitPath[splitPath.length-1];
-  let droppedArray = splitPath.slice(0, splitPath.length-2);
-  droppedArray.push('overlays');
-  let newPath = droppedArray.join('/');
-  let overlay = `overlay-${last}`;
-  let realPath = path.join(newPath, overlay);
-
-  let svg = addTextToSVG(text);
-
-  const output = sharp(imagePath, { animated: false })
-  .resize(
+function createOverlay(pathToFile, text, index) {
+  let outputPath = path.join(__dirname, `../../public/overlays/overlay-image${index}.png`);
+  const output = sharp(pathToFile, { animated: false })
+    .resize(
     { 
       width: 1920,
-      fit: sharp.fit.cover,
-      position: sharp.strategy.entropy,
+      fit: 'outside',
+      position: sharp.strategy.attention,
     })
-  .composite([
-    { 
-        input: pathToFile,
-        blend: 'over',
-        top : 0,
-        left : 0
+    .composite([
+      { 
+          input: Buffer.from(text),
+          blend: 'over',
+          position: sharp.strategy.attention,
+          top: 0,
+          left : 0
+        }
+    ])
+    .toFile(outputPath, (err, info) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(info);
       }
-  ])
-  .toFile(realPath, (err, info) => {
-    if (err) {
-      console.error(err);
-    } else {
-      console.log(info);
-      //addText(inputFilePath, text);
-    }
-  });
+    });
 }
 
 function addOverlay(inputFilePath, text) {
