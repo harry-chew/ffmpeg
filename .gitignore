@@ -11,6 +11,5 @@
 #REMOVE THIS IN PROD
 /*.log
 
-public/img/*
-public/overlays/*
+[Pp]ublic/*
 temp/*

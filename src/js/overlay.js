@@ -33,7 +33,7 @@ function createOverlay(pathToFile, text, index) {
           input: Buffer.from(text),
           blend: 'over',
           position: sharp.strategy.attention,
-          top: 0,
+          top: 1020,
           left : 0
         }
     ])
@@ -41,7 +41,7 @@ function createOverlay(pathToFile, text, index) {
       if (err) {
         console.error(err);
       } else {
-        console.log(info);
+        //console.log(info);
       }
     });
 }
@@ -95,14 +95,16 @@ function addText(i, text) {
     });
 }
 
-function resizeImage(image) {
-  return sharp(image).resize({
+function resizeImage(image, index) {
+  let outputPath = path.join(__dirname, `../../public/resized/resized-image${index}.png`);
+  return sharp(image)
+  .resize({
         width: 1920,
         height: 1080,
-        fit: 'outside',
+        fit: sharp.fit.cover,
         position: sharp.strategy.attention
   })
-  .toFile(`./resized/${image}`, (err, info) => {
+  .toFile(outputPath, (err, info) => {
     if (err) {
       console.error(err);
     } else {

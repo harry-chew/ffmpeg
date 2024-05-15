@@ -1,4 +1,4 @@
-const { addOverlay, createOverlay } = require('../src/js/overlay');
+const { addOverlay, createOverlay, resizeImage } = require('../src/js/overlay');
 const { convertAllImages } = require('../src/js/readImage');
 const Settings = require('./configController');
 const config = new Settings();
@@ -36,6 +36,7 @@ module.exports = events.on('overlay', (sentences) => {
         let svg = createSVG(sentence);
         let pathToFile = path.join(__dirname, `../public/${config.settings.images[index]}`);
         console.log(pathToFile);
-        createOverlay(pathToFile,svg, index);
+        resizeImage(pathToFile, index);
+        createOverlay(pathToFile, svg, index);
     });
 });
