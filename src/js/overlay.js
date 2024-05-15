@@ -67,7 +67,7 @@ function addOverlay(inputFilePath, text) {
       if (err) {
         console.error(err);
       } else {
-        console.log(info);
+        //console.log(info);
         //addText(inputFilePath, text);
       }
     });
@@ -90,14 +90,14 @@ function addText(i, text) {
       if (err) {
         console.error(err);
       } else {
-        console.log(info);
+        //console.log(info);
       }
     });
 }
 
 function resizeImage(image, index) {
-  let outputPath = path.join(__dirname, `../../public/resized/resized-image${index}.png`);
-  return sharp(image)
+  let outputPath = path.join(__dirname, `../../public/resized/image_${index}.png`);
+  const doit = sharp(image)
   .resize({
         width: 1920,
         height: 1080,
@@ -108,9 +108,10 @@ function resizeImage(image, index) {
     if (err) {
       console.error(err);
     } else {
-      console.log(info);
+      //console.log(info);
     }
   });
+  return outputPath;
 }
 
 module.exports = { addOverlay, resizeImage, addTextToSVG, createOverlay }

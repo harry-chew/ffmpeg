@@ -35,7 +35,6 @@ module.exports = events.on('overlay', (sentences) => {
     sentences.forEach((sentence, index) => {
         let svg = createSVG(sentence);
         let pathToFile = path.join(__dirname, `../public/${config.settings.images[index]}`);
-        console.log(pathToFile);
         resizeImage(pathToFile, index);
         createOverlay(pathToFile, svg, index);
     });
