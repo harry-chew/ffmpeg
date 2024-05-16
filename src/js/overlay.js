@@ -41,7 +41,7 @@ function createOverlay(pathToFile, text, index) {
       if (err) {
         console.error(err);
       } else {
-        //console.log(info);
+        console.log(info);
       }
     });
 }

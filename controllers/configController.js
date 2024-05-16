@@ -17,9 +17,8 @@ module.exports = class Settings {
         }
 
         this.settings = {
-            //'imagePath' : imagePath,
             'images' : [],
-            //'poemClean' : '',
+            'resized' : [],
             'sentences' : []
         };
 

@@ -5,7 +5,7 @@ function createSVG(text) {
     let svgHeight = 260;  
     let padding = 40;
     let rounded = 20;
-
+    
     let sub = text.split(',');
 
     let svg = `
@@ -18,11 +18,19 @@ function createSVG(text) {
     <rect x="${padding}" y="${padding}" rx="${rounded}" ry="${rounded}" width="${svgWidth - (padding * 2) }" height="200" fill="white"  filter="url(#f1)"/>
     `;
     
-    sub.forEach((s, index) => {
-        svg += `<text x="940" y="${(index * 60) + 60}" font-size="30" text-anchor="middle" fill="black" font-weight="bold" font-family="arial" textLength="1800" lengthAdjust="spacingAndGlyphs">
-            ${s}
-        </text>`;
-    });
+    if (text.split(' ').length > 17) {
+        sub.forEach((s, index) => {
+            svg += `<text x="940" y="${(index * 60) + 60}" font-size="30" text-anchor="middle" fill="black" font-weight="bold" font-family="arial" textLength="1800" lengthAdjust="spacingAndGlyphs">
+                ${s}
+            </text>`;
+        });
+    }
+    else {
+        svg += `<text x="940" y="150" font-size="40" text-anchor="middle" fill="black" font-weight="bold" font-family="arial" textLength="1800" lengthAdjust="spacingAndGlyphs">
+            ${text}
+                </text>`;
+    }
+
 
     svg += '</svg>';
     

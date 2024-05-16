@@ -6,6 +6,7 @@ const path = require('path');
 
 const GlobalEvents = require('./eventController');
 const { createSVG } = require('./svgController');
+const { resizeSingleImage } = require('./fileController');
 const events = new GlobalEvents();
 
 module.exports = events.on('poem', (text) => {
@@ -29,8 +30,6 @@ module.exports = events.on('images', (images) => {
 module.exports = events.on('overlay', (sentences) => {
     if (!sentences || !Array.isArray(sentences))
         return;
-
-    const overlayPath = path.join(__dirname, '../img/overlay.png');
 
     sentences.forEach((sentence, index) => {
         let svg = createSVG(sentence);
