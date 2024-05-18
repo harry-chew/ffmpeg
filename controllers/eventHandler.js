@@ -40,6 +40,9 @@ module.exports = events.on('overlay', (sentences) => {
 module.exports = events.on('resize', (images) => {
     if (!images || !Array.isArray(images))
         return;
-    let fullFilePath = path.join(__dirname, `../public/${images[0]}`);
-    resizeSingleImage(fullFilePath);
+
+    images.forEach((image, index) => {
+        let fullFilePath = path.join(__dirname, `../public/${images[index]}`);
+        resizeSingleImage(fullFilePath);
+    })
 });
