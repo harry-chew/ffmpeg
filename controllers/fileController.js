@@ -35,19 +35,12 @@ async function resizeOneImage(fullFilePath) {
     });
 }
 
-const someOutcomeFromPromise = async () => {
-    let some = await resizeOneImage(path.join(__dirname, '../public/img/image_0.jpg'));
-    return some;
-};
-
-console.log(someOutcomeFromPromise());
-
 function resizeSingleImage(fullFilePath) {
 
     let paths = fullFilePath.split('\\');
     let finalPath = paths[paths.length - 1];
 
-    let outputPath = path.join(__dirname, `../../public/resized/resized_${finalPath}`);
+    let outputPath = path.join(__dirname, `../public/resized/resized_${finalPath}`);
     const doit = sharp(fullFilePath)
     .resize({
           width: 1920,
@@ -59,10 +52,40 @@ function resizeSingleImage(fullFilePath) {
       if (err) {
         console.error(err);
       } else {
-        //console.log(info);
+        console.log(info);
       }
     });
     return outputPath;
-  }
+}
 
-  module.exports = { resizeOneImage };
+function applyOverlay(text, index) {
+  let pathToFile = path.join(__dirname, '../img/overlay-bg.png');
+  let outputPath = path.join(__dirname, `../public/overlays/overlay-image${index}.png`);
+
+  const output = sharp(pathToFile, { animated: false })
+  .resize(
+  { 
+    width: 1920,
+    fit: 'outside',
+    position: sharp.strategy.attention,
+  })
+  .composite([
+    { 
+        input: Buffer.from(text),
+        blend: 'over',
+        position: sharp.strategy.attention,
+        top: 800,
+        left : 0
+      }
+  ])
+  .toFile(outputPath, (err, info) => {
+    if (err) {
+      console.error(err);
+    } else {
+      //console.log(info);
+    }
+  });
+  return output;
+}
+
+module.exports = { resizeSingleImage, applyOverlay };

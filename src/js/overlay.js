@@ -33,7 +33,7 @@ function createOverlay(pathToFile, text, index) {
           input: Buffer.from(text),
           blend: 'over',
           position: sharp.strategy.attention,
-          top: 1020,
+          top: 920,
           left : 0
         }
     ])
@@ -73,27 +73,7 @@ function addOverlay(inputFilePath, text) {
     });
 }
 
-function addText(i, text) {
-  const output = sharp(`overlay-${i}`, { animated: false })
-    .extract({ left: 0, top: 0, width: 1920, height: 1080 })
-    .composite([
-      { 
-          input: Buffer.from(addTextToSVG(text)),
-          blend: 'over',
-          position: sharp.strategy.attention,
-          top: 0,
-          left : 0
-        }
-    ])
 
-    .toFile(`./temp/ot${i}.jpg`, (err, info) => {
-      if (err) {
-        console.error(err);
-      } else {
-        //console.log(info);
-      }
-    });
-}
 
 function resizeImage(image, index) {
   let outputPath = path.join(__dirname, `../../public/resized/image_${index}.png`);

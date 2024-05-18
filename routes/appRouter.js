@@ -28,6 +28,7 @@ router.post('/upload', (req, res) => {
     events.emit('poem', text);
     events.emit('images', images);
     events.emit('overlay', config.settings.sentences);
+    events.emit('resize', config.settings.images);
     res.locals.text = config.settings.sentences;
     res.locals.images = config.settings.images;
     res.render('upload', {  text : res.locals.text, images : res.locals.images  });
