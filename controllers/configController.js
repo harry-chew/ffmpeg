@@ -7,6 +7,7 @@ module.exports = class Settings {
         this.settings = {
             'images' : [],
             'imageTime' : 0,
+            'overlays' : [],
             'resized' : [],
             'sentences' : [],
             'timings' : []

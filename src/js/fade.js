@@ -12,30 +12,28 @@ const fs = require('fs');
 //-vf pad=ceil(iw/2)*2:ceil(ih/2)*2 -> make sure each frame is eeach size and add padding either width or height to compensate
 //-vcodec mpgeg4                    -> video codec to use
 //-y output.mp4                     -> -y means overwrite and path to file for output
-const moviePath = path.join(__dirname, 'output.mp4');
+const moviePath = path.join(__dirname, '../../public/output/crossfade.mp4');
 const ffmpegProcess = spawn('ffmpeg', [
     //'-report',
     //'-safe', '0',
     '-r', '25',
     //'-filter_complex', `scale=8000x4000, zoompan=z='min(zoom+0.0015,1.1)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=25:s=hd1080`,
-    '-loop', '1', '-t', '4', '-i', './temp/ot1.jpg',
-    '-loop', '1', '-t', '4', '-i', './temp/ot2.jpg',
-    '-loop', '1', '-t', '4', '-i', './temp/ot1.jpg',
-    '-loop', '1', '-t', '4', '-i', './temp/ot2.jpg',
-    '-loop', '1', '-t', '4', '-i', './temp/ot1.jpg',
+    '-loop', '1', '-t', '3', '-i', '../../public/overlays/overlay-image0.png',
+    '-loop', '1', '-t', '3', '-i', '../../public/overlays/overlay-image1.png',
+    '-loop', '1', '-t', '3', '-i', '../../public/overlays/overlay-image2.png',
+    '-loop', '1', '-t', '3', '-i', '../../public/overlays/overlay-image3.png',
+    '-loop', '1', '-t', '3', '-i', '../../public/overlays/overlay-image4.png',
     '-filter_complex',
-    `[0:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fade=t=out:st=3.5:d=1:color=white[v0];
-    [1:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fade=t=in:st=0:d=1,fade=t=out:st=3.5:d=1:color=white[v1];
-    [2:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fade=t=in:st=0:d=1,fade=t=out:st=3.5:d=1:color=white[v2];
-    [3:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fade=t=in:st=0:d=1,fade=t=out:st=3.5:d=1:color=white[v3];
-    [4:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fade=t=in:st=0:d=1,fade=t=out:st=3.5:d=1:color=white[v4];
-    [v0][v1][v2][v3][v4]concat=n=5:v=1:a=0,format=yuv420p[v]`,
+    `[0:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fade=t=out:st=0:d=1[v0];
+    [1:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fade=t=in:st=0:d=1,fade=t=out:st=2.5:d=1[v1];
+    [2:v]scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1,fade=t=in:st=0:d=1,fade=t=out:st=2.5:d=1[v2];
+    [v0][v1]overlay[out1];[out1][v2]overlay[out]`,
     '-c:v', 'libx264', '-crf', '23',
-    '-map', '[v]',
+    '-map', '[out]',
     //'-f', 'concat',
     //'-i', 'video.txt',
     //'-shortest',
-    '-qscale', '0',
+    '-q:v', '0',
     //'-pix_fmt', 'yuv420p',
     '-vcodec', 'mpeg4',
     '-y', moviePath

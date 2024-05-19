@@ -7,7 +7,7 @@ const GlobalEvents = require('./eventController');
 const { createSVG } = require('./svgController');
 const { resizeSingleImage, applyOverlay } = require('./fileController');
 const { getTimingForSentence } = require('./textController');
-const { BuildCommand, Run } = require('./buildController');
+const { BuildCommandPassOne, RunPassOne, BuildCommandPassTwo, RunPassTwo } = require('./buildController');
 const events = new GlobalEvents();
 
 module.exports = events.on('poem', (text) => {
@@ -35,7 +35,7 @@ module.exports = events.on('overlay', (sentences) => {
     sentences.forEach((sentence, index) => {
         config.settings.timings.push(getTimingForSentence(sentence));
         let svg = createSVG(sentence);
-        applyOverlay(svg, index);
+        config.settings.overlays.push(applyOverlay(svg, index));
     });
 });
 
@@ -73,6 +73,24 @@ module.exports = events.on('firstpass', () => {
 
     const outputFilePath = path.join(__dirname, '../public/output/output.mp4');
 
-    let buildCommand = BuildCommand(config.settings.resized, options, outputFilePath);
-    Run(buildCommand);
+    let buildCommand = BuildCommandPassOne(config.settings.resized, options, outputFilePath);
+    console.log("Starting pass 1 video compilation.");
+    RunPassOne(buildCommand);
+});
+
+module.exports = events.on('secondpass', () => {
+    const options = {
+        //report: '-report',
+        //safe: true,
+        framerate: 25,
+        filterComplex: '-filter_complex',
+        fade: true,
+        imageTime : config.get('imageTime')
+    };
+
+    const outputFilePath = path.join(__dirname, '../public/output/overlay-output.mp4');
+    let buildCommand = BuildCommandPassTwo(config.settings.overlays, options, outputFilePath);
+    console.log(buildCommand);
+    console.log("Starting pass 2 video compilation.");
+    RunPassTwo(buildCommand);
 });

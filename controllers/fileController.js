@@ -52,7 +52,7 @@ function applyOverlay(text, index) {
     }
   });
   
-  return output;
+  return outputPath;
 }
 
 module.exports = { resizeSingleImage, applyOverlay };
