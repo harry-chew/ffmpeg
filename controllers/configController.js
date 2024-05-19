@@ -18,8 +18,10 @@ module.exports = class Settings {
 
         this.settings = {
             'images' : [],
+            'imageTime' : 0,
             'resized' : [],
-            'sentences' : []
+            'sentences' : [],
+            'timings' : []
         };
 
         Object.freeze(this);

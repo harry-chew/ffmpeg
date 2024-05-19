@@ -7,6 +7,8 @@ const path = require('path');
 const GlobalEvents = require('./eventController');
 const { createSVG } = require('./svgController');
 const { resizeSingleImage, applyOverlay } = require('./fileController');
+const { getTimingForSentence } = require('./textController');
+const { BuildCommand, Run } = require('./buildController');
 const events = new GlobalEvents();
 
 module.exports = events.on('poem', (text) => {
@@ -32,6 +34,7 @@ module.exports = events.on('overlay', (sentences) => {
         return;
 
     sentences.forEach((sentence, index) => {
+        config.settings.timings.push(getTimingForSentence(sentence));
         let svg = createSVG(sentence);
         applyOverlay(svg, index);
     });
@@ -43,6 +46,34 @@ module.exports = events.on('resize', (images) => {
 
     images.forEach((image, index) => {
         let fullFilePath = path.join(__dirname, `../public/${images[index]}`);
-        resizeSingleImage(fullFilePath);
-    })
+        config.settings.resized.push(resizeSingleImage(fullFilePath));
+    });
+});
+
+module.exports = events.on('timing', () => {
+    let sum = 0;
+    config.settings.timings.forEach((time) => {
+        sum += time;
+    });
+
+    let imageCount = config.settings.images.length;
+
+    let timePerSlide = sum / imageCount;
+    config.set('imageTime', timePerSlide);
+}); 
+
+module.exports = events.on('firstpass', () => {
+    const options = {
+        //report: '-report',
+        //safe: true,
+        framerate: 25,
+        filterComplex: '-filter_complex',
+        fade: true,
+        imageTime : config.get('imageTime')
+    };
+
+    const outputFilePath = path.join(__dirname, '../public/output/output.mp4');
+
+    let buildCommand = BuildCommand(config.settings.resized, options, outputFilePath);
+    Run(buildCommand);
 });

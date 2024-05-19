@@ -25,16 +25,20 @@ router.post('/upload', (req, res) => {
 
     const { text } = req.body;
     const { images } = req.files;
+
     events.emit('poem', text);
     events.emit('images', images);
     events.emit('overlay', config.settings.sentences);
     events.emit('resize', config.settings.images);
+    events.emit('timing');
+
     res.locals.text = config.settings.sentences;
     res.locals.images = config.settings.images;
     res.render('upload', {  text : res.locals.text, images : res.locals.images  });
 });
 
 router.get('/create', (req, res) => {
+    events.emit('firstpass');
     res.render('create', { stylesheet : '../css/stylesheet.css' });
 });
 

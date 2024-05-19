@@ -52,7 +52,7 @@ function resizeSingleImage(fullFilePath) {
       if (err) {
         console.error(err);
       } else {
-        console.log(info);
+        //console.log(info);
       }
     });
     return outputPath;

@@ -18,4 +18,10 @@ cleanInput = (req, res) => {
     return req;
 };
 
-module.exports = { getSentences, cleanInput }
+function getTimingForSentence(sentence) {
+    let wordPerMin = 80;
+    let wordCount = sentence.split(' ').length;
+    return (wordCount / wordPerMin) * 60;
+}
+
+module.exports = { getSentences, cleanInput, getTimingForSentence }
