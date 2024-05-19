@@ -1,7 +1,6 @@
 // filesRouter.js
 const express = require('express');
 const router = express.Router();
-const { getSentences, cleanInput }  = require('../controllers/textController');
 const Settings = require('../controllers/configController');
 const config = new Settings();
 

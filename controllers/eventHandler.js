@@ -1,4 +1,3 @@
-const { addOverlay, createOverlay, resizeImage } = require('../src/js/overlay');
 const { convertAllImages } = require('../src/js/readImage');
 const Settings = require('./configController');
 const config = new Settings();

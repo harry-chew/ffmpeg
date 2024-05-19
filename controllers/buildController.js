@@ -1,6 +1,5 @@
 const path = require('path');
 const { spawn } = require('child_process');
-const fs = require('fs');
 
 const outputFilePath = path.join(__dirname, '../../public/output/output.mp4');
 

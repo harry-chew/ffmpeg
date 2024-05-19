@@ -1,15 +1,3 @@
-const fs = require('fs');
-const path = require('path');
-
-const GlobalEvents = require('./eventController');
-const events = new GlobalEvents();
-
-// Find the root directory using process.cwd()
-const rootDirectory = process.cwd();
-// Resolve the root directory to get the absolute path
-const rootPath = path.resolve(rootDirectory);
-const imagePath = path.join(rootPath, 'temp');
-
 module.exports = class Settings {
     constructor() {
         if (Settings.instance instanceof Settings) {
@@ -39,4 +27,3 @@ module.exports = class Settings {
         this.settings[key] = value;
     }
 }
-
