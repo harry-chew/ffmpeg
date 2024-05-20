@@ -11,5 +11,8 @@
 #REMOVE THIS IN PROD
 /*.log
 
-[Pp]ublic/*
+[Pp]ublic/img/*
+[Pp]ublic/output/*
+[Pp]ublic/overlays/*
+[Pp]ublic/resized/*
 temp/*

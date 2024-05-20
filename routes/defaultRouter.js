@@ -8,7 +8,11 @@ router.get('/', (req, res) => {
 });
 
 router.get('/about', (req, res) => {
-    res.render('about');
+    res.render('about', { stylesheet : '../css/stylesheet.css' });
+});
+
+router.get('/help', (req, res) => {
+    res.render('help', { stylesheet : '../css/stylesheet.css' });
 });
 
 module.exports = router;
